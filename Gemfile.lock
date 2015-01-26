@@ -93,6 +93,11 @@ GEM
     coffee-script-source (1.8.0)
     colorize (0.7.5)
     database_cleaner (1.4.0)
+    delayed_job (4.0.6)
+      activesupport (>= 3.0, < 5.0)
+    delayed_job_active_record (4.0.3)
+      activerecord (>= 3.0, < 5.0)
+      delayed_job (>= 3.0, < 4.1)
     diff-lcs (1.2.5)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
@@ -301,6 +306,7 @@ DEPENDENCIES
   capybara (>= 2.2.0)
   coffee-rails (~> 4.0.0)
   database_cleaner
+  delayed_job_active_record
   devise!
   factory_girl_rails
   faker
