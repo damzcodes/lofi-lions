@@ -11,6 +11,9 @@ class Spinach::Features::NewUser < Spinach::FeatureSteps
   step 'I create a new user "someone@example.com"' do
     visit '/users'
     visit '/users/new'
+    fill_in('user_email', with: "someone@example.com")
+    check 'user_edits_master_text'
+    click_button('Save')
   end
 
   step 'an email with a password reset link should be added to the delayed jobs' do
