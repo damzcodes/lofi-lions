@@ -1,10 +1,16 @@
 class Spinach::Features::NewUser < Spinach::FeatureSteps
   step 'I am logged in as an administrator' do
-    pending 'step not implemented'
+    FactoryGirl.create(:user, email: "test@example.com", password: "password", password_confirmation: "password", is_administrator: true)
+    visit '/'
+    fill_in('user_email', with: "test@example.com")
+    fill_in('user_password', with: "password")
+    click_button("Log in")
+    page.should have_content("Logged in as")
   end
 
   step 'I create a new user "someone@example.com"' do
-    pending 'step not implemented'
+    visit '/users'
+    visit '/users/new'
   end
 
   step 'an email with a password reset link should be added to the delayed jobs' do

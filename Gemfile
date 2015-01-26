@@ -72,6 +72,7 @@ group :test do
   gem 'launchy'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'database_cleaner'
 end
 
 group :development, :test do
