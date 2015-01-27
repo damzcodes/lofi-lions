@@ -42,6 +42,7 @@ gem 'rack-timeout'
 
 gem 'simple_form', github: 'plataformatec/simple_form'
 
+gem 'pry'
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

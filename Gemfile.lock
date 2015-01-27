@@ -323,6 +323,7 @@ DEPENDENCIES
   mail_view (~> 2.0.4)
   nokogiri
   pg
+  pry
   quiet_assets
   rack-livereload
   rack-timeout
