@@ -35,6 +35,7 @@ gem 'haml-rails'
 gem 'devise', :git => 'https://github.com/plataformatec/devise.git', :branch => 'lm-rails-4-2'
 
 gem 'delayed_job_active_record'
+gem 'daemons'
 
 gem 'unicorn'
 gem 'rack-timeout'
