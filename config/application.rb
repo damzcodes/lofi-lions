@@ -27,6 +27,8 @@ module LofiLions
     # Tell error callbacks to adopt new behaviour
     config.active_record.raise_in_transactional_callbacks = true
 
+    config.active_job.queue_adapter = :delayed_job
+
     config.generators do |g|
       g.helper nil
       g.test_framework :rspec

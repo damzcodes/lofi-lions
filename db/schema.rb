@@ -11,12 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140707153829) do
+ActiveRecord::Schema.define(version: 20150127110813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "key_placements", force: true do |t|
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "key_placements", force: :cascade do |t|
     t.integer  "master_text_id"
     t.integer  "view_id"
     t.integer  "position"
@@ -27,9 +43,9 @@ ActiveRecord::Schema.define(version: 20140707153829) do
   add_index "key_placements", ["master_text_id"], name: "index_key_placements_on_master_text_id", using: :btree
   add_index "key_placements", ["view_id"], name: "index_key_placements_on_view_id", using: :btree
 
-  create_table "languages", force: true do |t|
-    t.string   "name"
-    t.string   "code"
+  create_table "languages", force: :cascade do |t|
+    t.string   "name",                     default: ""
+    t.string   "code",                     default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "pluralizable_label_zero",  default: ""
@@ -40,7 +56,7 @@ ActiveRecord::Schema.define(version: 20140707153829) do
     t.string   "pluralizable_label_other", default: ""
   end
 
-  create_table "languages_users", id: false, force: true do |t|
+  create_table "languages_users", id: false, force: :cascade do |t|
     t.integer "language_id", null: false
     t.integer "user_id",     null: false
   end
@@ -48,7 +64,7 @@ ActiveRecord::Schema.define(version: 20140707153829) do
   add_index "languages_users", ["language_id", "user_id"], name: "index_languages_users_on_language_id_and_user_id", using: :btree
   add_index "languages_users", ["user_id", "language_id"], name: "index_languages_users_on_user_id_and_language_id", using: :btree
 
-  create_table "localized_texts", force: true do |t|
+  create_table "localized_texts", force: :cascade do |t|
     t.integer  "master_text_id"
     t.integer  "language_id"
     t.text     "other",          default: ""
@@ -68,17 +84,17 @@ ActiveRecord::Schema.define(version: 20140707153829) do
   add_index "localized_texts", ["language_id"], name: "index_language_id", using: :btree
   add_index "localized_texts", ["master_text_id"], name: "index_master_text_id", using: :btree
 
-  create_table "master_texts", force: true do |t|
-    t.string   "key"
-    t.text     "other"
-    t.text     "comment"
+  create_table "master_texts", force: :cascade do |t|
+    t.string   "key",          default: ""
+    t.text     "other",        default: ""
+    t.text     "comment",      default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "pluralizable", default: false
     t.text     "one",          default: ""
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
@@ -99,7 +115,7 @@ ActiveRecord::Schema.define(version: 20140707153829) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "views", force: true do |t|
+  create_table "views", force: :cascade do |t|
     t.string   "name"
     t.text     "comments"
     t.datetime "created_at"
