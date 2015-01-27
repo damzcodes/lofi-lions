@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.randomize_password
     if @user.save
+      CronMailer.password_reset(@user).deliver_later
       redirect_to users_path, notice: "#{@user.email} created"
     else
       render :new

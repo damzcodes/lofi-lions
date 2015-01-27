@@ -18,10 +18,12 @@ class Spinach::Features::NewUser < Spinach::FeatureSteps
 
   step 'an email with a password reset link should be added to the delayed jobs' do
     expect(Delayed::Job.count).to eq(1)
-    # Delayed::Worker.new.work_off
-    # check the active mailer deliveries > 0
-    # for the last delivery :
-    #  its to email address is what we expect
+    Delayed::Worker.new.work_off
+    expect(ActionMailer::Base.deliveries.count).to be > 0
+    email = ActionMailer::Base.deliveries.last
+    binding.pry
+    expect(email.to[0]).to eq("someone@example.com")
+    # expect(email.body.raw_source.scan(/<([^>]*)>/)[11][0]).should eq("a href=\"http://example.com/password_reset\"")
     #  go through each of the 'parts'
     #  look for the password reset url
     #  "include Rails.applicaiton.routes.helper"

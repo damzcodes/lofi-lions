@@ -6,6 +6,12 @@ class CronMailer < ActionMailer::Base
     mail(to: admins, subject: "Translation status #{Date.today.to_s(:long)}")
   end
 
+  def password_reset(user)
+    @user = user
+    @url  = 'http://example.com/password_reset'
+    mail(to: @user.email, subject: 'Password Reset Link')
+  end
+
   protected
 
   def admins
